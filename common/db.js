@@ -7,11 +7,13 @@ function insert(str,optins,callback){
 	Db.open(function(err,db){
 		if(err){
 			callback(err);
+			db.close();
 			return;
 		}
 		db.collection(str,function(err,collection){
 			if(err){
 				callback(err);
+				db.close();
 				return;
 			}
 			collection.insert(optins,function(err,doc){
@@ -36,8 +38,8 @@ function findOne(str,obj,callback){
 				callback(err);
 				return;
 			}
-			collection.findOne(obj,{'email':1},function(err,doc){
-				db.close()
+			collection.findOne(obj, function(err,doc){
+				db.close();
 				if(err){
 					callback(err);
 					return;
@@ -61,7 +63,8 @@ function find(str,obj,callback){
 			}
 			collection.find(obj).sort({'Date':-1}).toArray(function(err,docs){
 				if(err) throw err;
-				callback(null,docs)
+				callback(null,docs);
+				db.close();
 			})
 		})
 	})

@@ -24,11 +24,12 @@ module.exports = function(req,res){
 		var obj = {
 			"name":req.user.name,
 			'post':fields.post,
-			'Date':new Date()
+			'Date': new Date()
 		}
 		if(files.img.name){
 			obj.img = '/public/images/'+req.user.name+"/"+files.img.name;
 		}
+		console.log(obj);
 		mongo.insert('postData',obj,function(err){
 			if(err){
 				throw err;
